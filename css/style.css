@@ -10,7 +10,10 @@ h1.word {
   height: 500px;
   text-align: center;
   line-height: 500px;
-}
+  }
+  h1.word span {
+    color: #f00;
+  }
 
 a#button { 
   margin: 20px auto;

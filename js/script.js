@@ -35,6 +35,10 @@ $(document).ready(function() {
 
   function nextWord(){
     var word = words.pop();
+    var i = word.length / 2;
+    var midchar = word.substring( i, i + 1);
+    midchar = "<span>" + midchar + "</span>";
+    word = word.substring(0, i) + midchar + word.substring(i + 1);
     $(".word").empty().html(word);
   }
 });
