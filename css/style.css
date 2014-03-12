@@ -7,8 +7,9 @@ section {
 }
 
 h1.word {
-  margin: 500px auto;
+  height: 500px;
   text-align: center;
+  line-height: 500px;
 }
 
 a#button { 
@@ -17,7 +18,7 @@ a#button {
 
 div.text {
   height: 500px;
-  overflow: none;
+  overflow: hidden;
   color: #888;
 }
 
