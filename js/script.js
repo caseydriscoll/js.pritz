@@ -7,7 +7,7 @@ $(document).ready(function() {
       dataType: "text",
       success : function (data) {
         $(".text").html(data);
-        words = $(".text").text().split(' ');
+        words = $(".text").text().split(/ |\n/).reverse();
       }
     });
   });
@@ -22,7 +22,9 @@ $(document).ready(function() {
   $("#start").click(function() {
     $(this).hide();
     $('#stop').show();
-    intervalID = setInterval(nextWord, 500);
+    var wpm = $('#rate').val();
+    var speed = 60000 / wpm; 
+    intervalID = setInterval(nextWord, speed);
   });
 
   $("#stop").click(function() {
