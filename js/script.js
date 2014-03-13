@@ -37,14 +37,18 @@ $(document).ready(function() {
   $("#start").click(function() {
     $(this).hide();
     $('#stop').show();
+
+    $('.block').show().animate({width: 0}, 800);
+
     wpm = $('#rate').val();
-    speed = 60000 / wpm;
-    intervalID = setInterval(run, speed);
+    speed = 60000 / ( wpm * 1.2 ); // Bug, doesn't seem to moving as fast
+    setTimeout( function() { intervalID = setInterval(run, speed) }, 800 );
   });
 
   $("#stop").click(function() {
     $(this).hide();
     $('#start').show();
+    $('.block').hide().css('width', '100%');
     clearInterval(intervalID);
   });
 
@@ -62,10 +66,14 @@ $(document).ready(function() {
   }
 
   function showNextWord(){
-    hasPunct = false;
     var word = nextWord;
     nextWord = words.pop();
     var i = Math.floor(word.length / 2);
+
+    if ( hasPunct )
+      i -= 1;
+
+    hasPunct = false;
 
     // shift is every word before the midchar plus half the midchar
     var shift = 0; 

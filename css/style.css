@@ -7,18 +7,29 @@ section {
 }
 
 div.wordwrap {
+  position: relative;
   height: 100px;
   margin: 300px 0;
   }
+  div.block {
+    display: none; position: absolute;
+    width: 100%; height: 120px;
+    top: -14px;
+    background: #333;
+    opacity: 0.2;
+    z-index: 99;
+    }
+    div.blockleft  { right: -2px; }
+    div.blockright { left: -2px; }
   div.wordleft {
-    float: left;
+    position: relative; float: left;
     width: 32%; height: 100px;
     border: 4px solid #000;
     border-right-width: 2px;
     border-left: none;
   }
   div.wordright {
-    float: right;
+    position: relative; float: right;
     width: 68%; height: 100px;
     margin-bottom: 200px;
     border: 4px solid #000;
@@ -28,7 +39,7 @@ div.wordwrap {
 
 h1.word {
   display: block;
-  padding: 25px 0 30px; margin-left: -62px;
+  padding: 35px 0 40px; margin: 8px 0 0 -62px;
   font-size: 48px;
   line-height: 0px;
   background: #fff;
