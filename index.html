@@ -26,14 +26,25 @@
           <h1 class="word">js.<span>p</span>ritz</h1>
         </div>
       <div>
-      <label for="rate">Words per minute
-        <input type="text" value="600" name="rate" id="rate" class="form-control" />
-      </label>
-      <a id="start" class="btn btn-success btn-block">start</a>
-      <a id="stop" class="btn btn-danger btn-block">stop</a>
-      <!-- <a id="nextword" class="btn btn-default btn-block">next word</a> -->
-      <a id="button" class="btn btn-primary btn-block">load text</a>
-      <div class="text"></div>
+      <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+        <h1 class="navbar-brand">js.<span>p</span>ritz</h1>
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <label for="rate" class="">WPM</label>
+            <input type="text" value="600" name="rate" id="rate" class="form-control" />
+        
+            <a id="start" class="btn btn-success">start</a>
+            <a id="stop" class="btn btn-danger">stop</a>
+          </div>
+        </form>
+
+        <!-- <a id="nextword" class="btn btn-default btn-block">next word</a> -->
+
+        <div class="navbar-form navbar-right">
+          <a id="button" class="btn btn-primary">load text</a>
+          <div class="text form-control"></div>
+        </div>
+      </nav>
     </section>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

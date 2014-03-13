@@ -34,16 +34,22 @@ h1.word {
   background: #fff;
   color: #000;
   }
-  h1.word span {
+h1.navbar-brand {
+  padding: 0 10px 0 20px; margin: 0;
+  line-height: 45px;
+  color: #000 !important;
+  }
+  h1.word span,
+  h1.navbar-brand span{
     color: #f00;
   }
 
 a#button { 
-  margin: 20px auto;
 }
 
 div.text {
-  height: 500px;
+  width: 200px !important;
+  margin-right: 20px;
   overflow: hidden;
   color: #888;
 }
