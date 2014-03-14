@@ -1,6 +1,8 @@
 $(document).ready(function() {
-  var words;
-  var nextWord;
+  var words; // Object containing 'wordObjects' 
+  var wordStringsArray; // Array of words in order
+
+  var w = 0;          // Index of current word
   var wordCount;
   var wordTimer;
 
@@ -59,11 +61,79 @@ $(document).ready(function() {
   function processWords(data) {
     $('.progress').removeClass('hide');
     $(".text").html(data);
-    words = $(".text").text().split(/ |\n/).reverse();
-    nextWord = words.pop();
-    $('.progress-bar.loading').animate({'width': '100%'}, 1000);
+    wordStringsArray = $(".text").text().split(/ |\n/);
+
+    console.log("Total word strings: " + wordStringsArray.length);
+
+    words = new Object();
+    words.length = 0;
+    
+    // Create an object for each word and create a DD linked list?
+    wordStringsArray.forEach(function(word, index){
+      if ( words[word] === undefined ) {
+        words[word] = wordObject(word);
+        words.length++;
+
+        var percent = Math.floor(100 * index / wordStringsArray.length) + 1;
+        setTimeout( function(){$('.progress-bar.loading').css('width', percent + '%')}, 100);
+      } else {
+        words[word].count++;
+      }
+    });
+
+    //for ( var word in words ) {
+    //  var obj = words[word];
+    //  for ( var prop in obj )
+    //    if ( obj.hasOwnProperty(prop) && obj.count !== undefined && obj.count > 100 )
+    //      console.log(word + " " + obj.count);
+    //}
+
+    console.log("Total unique words: " + words.length);
+
   }
+
+  function wordObject(wordString) {
  
+    var i = Math.floor(wordString.length / 2);
+    
+    var word = new Object();
+
+    word.string = wordString;
+    word.hasPunctuation = false;
+    word.count = 1;
+
+    // test to see if word has punctuation so to know when to pause
+    var endchar = wordString.substring( wordString.length - 1 );
+    if ( endchar == '.' || endchar == ',' || endchar == ';' || endchar == '-' )
+      word.hasPunctuation = true;
+
+    // but catch these false positives
+    if ( wordString == "Mr." || wordString == "Mrs." || wordString == "St." )
+      word.hasPunctuation = false;
+
+    // shift the index back to not count the punctuation
+    if ( word.hasPunctuation )
+      i -= 1;
+
+    // shift is every word before the midchar plus half the midchar
+    var shift = 0; 
+    for ( var j = 0; j < i; j++) {
+      shift += charWidths[wordString.charCodeAt(j)];
+    }
+    shift += Math.floor(charWidths[wordString.charCodeAt(i)] / 2);
+
+    // inverse the shift for a negative margin
+    word.shift = shift * -1;
+
+    endchar = " " + endchar + "\n";
+
+    var midchar = wordString.substring( i, i + 1);
+    midchar = "<span>" + midchar + "</span>";
+    word.html = wordString.substring(0, i) + midchar + wordString.substring(i + 1);
+
+    return word;
+  }
+
 
   var hasPunct;
   var intervalID;
@@ -90,7 +160,7 @@ $(document).ready(function() {
   function run(){
     clearInterval(intervalID);
     
-    if ( hasPunct )
+    if ( words[wordStringsArray[w]].hasPunctuation )
       speed = speed * 2.5;
    else
       speed = 60000 / wpm; 
@@ -101,38 +171,9 @@ $(document).ready(function() {
   }
 
   function showNextWord(){
-    var word = nextWord;
-    nextWord = words.pop();
-    var i = Math.floor(word.length / 2);
-
-    if ( hasPunct )
-      i -= 1;
-
-    hasPunct = false;
-
-    // shift is every word before the midchar plus half the midchar
-    var shift = 0; 
-    for ( var j = 0; j < i; j++) {
-      shift += charWidths[word.charCodeAt(j)];
-      printConsole(word, i, j, shift);
-    }
-    shift += Math.floor(charWidths[word.charCodeAt(i)] / 2);
-
-    shift *= -1;
-
-    var endchar = nextWord.substring( nextWord.length - 1 );
-    if ( endchar == '.' || endchar == ',' || endchar == ';' || endchar == '-' )
-      hasPunct = true;
-
-    endchar = " " + endchar + "\n";
-    printConsole(word, i, j, shift, endchar);
-
-    var midchar = word.substring( i, i + 1);
-    midchar = "<span>" + midchar + "</span>";
-    word = word.substring(0, i) + midchar + word.substring(i + 1);
-
-    $(".word").empty().css("margin-left", shift + "px").html(word);
-
+    var word = words[wordStringsArray[w]]; // A wordObject
+    $(".word").empty().css("margin-left", word.shift + "px").html(word.html);
+    w++;
   }
 
   function printConsole(word, i, j, shift, end) {
