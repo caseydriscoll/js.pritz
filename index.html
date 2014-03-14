@@ -35,7 +35,7 @@
         <form class="navbar-form navbar-left">
           <div class="form-group">
             <label for="rate" class="">WPM</label>
-            <input type="text" value="600" name="rate" id="rate" class="form-control" />
+            <input type="text" value="600" name="rate" id="rate" class="wpm form-control" />
         
             <a id="start" class="btn btn-success">start</a>
             <a id="stop" class="btn btn-danger">stop</a>
@@ -46,8 +46,13 @@
 
 
         <div class="navbar-form navbar-right">
-          <a id="button" class="btn btn-primary">load text</a>
-          <div class="text form-control"></div>
+          <div class="progress hide">
+            <div class="progress-bar loading" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+              <span class="sr-only">60% Complete</span>
+            </div>
+          </div>
+          <a id="load" class="btn btn-primary">Load Text</a>
+          <div class="text"></div>
         </div>
       </nav>
     </section>

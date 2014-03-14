@@ -40,7 +40,7 @@ $(document).ready(function() {
                     28, 26, 38, 29, // u, v, w, x
                     25, 29];        // y, z
 
-  $("#button").click(function() {
+  $("#load").click(function() {
     $.ajax({
       url : "docs/tale-of-two-cities.txt",
       dataType: "text",
@@ -57,9 +57,11 @@ $(document).ready(function() {
   $('#stop').hide();
 
   function processWords(data) {
+    $('.progress').removeClass('hide');
     $(".text").html(data);
     words = $(".text").text().split(/ |\n/).reverse();
     nextWord = words.pop();
+    $('.progress-bar.loading').animate({'width': '100%'}, 1000);
   }
  
 
