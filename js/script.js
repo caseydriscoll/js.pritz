@@ -52,6 +52,12 @@ $(document).ready(function() {
     });
   });
 
+  $("#prevword").click(function() {
+    if ( w > 1 ) {
+      w = w - 2;
+      showNextWord();
+    }
+  });
   $("#nextword").click(function() {
     showNextWord();
   });
