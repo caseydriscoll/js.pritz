@@ -4,13 +4,41 @@ $(document).ready(function() {
   var wordCount;
   var wordTimer;
 
-  var charWidths = [27, 30, 28, 28, // a, b, c, d
-                    28, 16, 28, 28, // e, f, g, h
+  // ASCII Table at
+  // http://www.theasciicode.com.ar/ascii-printable-characters/capital-letter-a-uppercase-ascii-code-65.html
+  var charWidths = [30, 30, 30, 30, 
+                    30, 30, 30, 30,   
+                    30, 30, 30, 30,   
+                    30, 30, 30, 30,   
+                    30, 30, 30, 30,   
+                    30, 30, 30, 30,   
+                    30, 30, 30, 30,   
+                    30, 30, 30, 30, // ^ 31 Control chars ^ 
+                    30, 30, 30, 30, //    !  "  #
+                    30, 30, 30, 30, // $  %  &  '
+                    30, 30, 30, 30, // (  )  *  +
+                    30, 20, 13, 30, // ,  -  .  /
+                    30, 30, 30, 30, // 0, 1, 2, 3
+                    30, 30, 30, 30, // 4, 5, 6, 7
+                    30, 30,         // 8, 9,  
+                    30, 30, 30, 30, // :  ;  <  = 
+                    30, 30, 30,     // >  ?  @ 
+                    30, 35, 30, 36, // A, B, C, D
+                    30, 30, 30, 30, // E, F, G, H
+                    16, 30, 30, 30, // I, J, K, L
+                    30, 30, 30, 34, // M, N, O, P
+                    30, 30, 34, 30, // Q, R, S, T
+                    30, 30, 30, 30, // U, V, W, X
+                    30, 30,         // Y, Z, 
+                    30, 30, 30, 30, // [  \  ]  ^
+                    30, 30,         // _  ` 
+                    27, 30, 28, 28, // a, b, c, d
+                    28, 16, 30, 28, // e, f, g, h
                     12, 12, 28, 12, // i, j, k, l
-                    29, 28, 28, 30, // m, n, o, p
+                    42, 28, 30, 30, // m, n, o, p
                     28, 18, 25, 18, // q, r, s, t
-                    28, 29, 38, 29, // u, v, w, x
-                    29, 29];            // y, z
+                    28, 26, 38, 29, // u, v, w, x
+                    25, 29];        // y, z
 
   $("#button").click(function() {
     $.ajax({
@@ -83,14 +111,10 @@ $(document).ready(function() {
     // shift is every word before the midchar plus half the midchar
     var shift = 0; 
     for ( var j = 0; j < i; j++) {
-      if ( word.charCodeAt(j) >= 97 && word.charCodeAt(j) < 123 ) {
-        shift += charWidths[word.charCodeAt(j) - 97];
-      } else {
-        shift += 30;
-      }
+      shift += charWidths[word.charCodeAt(j)];
       printConsole(word, i, j, shift);
     }
-    shift += Math.floor(charWidths[word.charCodeAt(i) - 97] / 2);
+    shift += Math.floor(charWidths[word.charCodeAt(i)] / 2);
 
     shift *= -1;
 
