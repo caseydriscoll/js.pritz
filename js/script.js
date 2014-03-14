@@ -17,9 +17,7 @@ $(document).ready(function() {
       url : "docs/tale-of-two-cities.txt",
       dataType: "text",
       success : function (data) {
-        $(".text").html(data);
-        words = $(".text").text().split(/ |\n/).reverse();
-        nextWord = words.pop();
+        processWords(data);
       }
     });
   });
@@ -29,6 +27,13 @@ $(document).ready(function() {
   });
 
   $('#stop').hide();
+
+  function processWords(data) {
+    $(".text").html(data);
+    words = $(".text").text().split(/ |\n/).reverse();
+    nextWord = words.pop();
+  }
+ 
 
   var hasPunct;
   var intervalID;
@@ -56,7 +61,7 @@ $(document).ready(function() {
     clearInterval(intervalID);
     
     if ( hasPunct )
-      speed = speed * 2;
+      speed = speed * 2.5;
    else
       speed = 60000 / wpm; 
 
@@ -80,24 +85,42 @@ $(document).ready(function() {
     for ( var j = 0; j < i; j++) {
       if ( word.charCodeAt(j) >= 97 && word.charCodeAt(j) < 123 ) {
         shift += charWidths[word.charCodeAt(j) - 97];
-        //console.log("word: " + word + " i/j: " + i+"/"+j + " charCodeAt: " + word.charCodeAt(j) + " shift: " + shift);
       } else {
         shift += 30;
-        //console.log("word: " + word + " i/j: " + i+"/"+j + " charCodeAt: " + word.charCodeAt(j) + " shift: " + shift);
       }
+      printConsole(word, i, j, shift);
     }
-    shift += charWidths[word.charCodeAt(i) - 97] / 2;
-    shift = 0 - shift;
+    shift += Math.floor(charWidths[word.charCodeAt(i) - 97] / 2);
 
+    shift *= -1;
+
+    var endchar = nextWord.substring( nextWord.length - 1 );
+    if ( endchar == '.' || endchar == ',' || endchar == ';' || endchar == '-' )
+      hasPunct = true;
+
+    endchar = " " + endchar + "\n";
+    printConsole(word, i, j, shift, endchar);
 
     var midchar = word.substring( i, i + 1);
     midchar = "<span>" + midchar + "</span>";
     word = word.substring(0, i) + midchar + word.substring(i + 1);
 
-    var endchar = nextWord.substring( nextWord.length - 1 );
-    if ( endchar == '.' || endchar == ',' )
-      hasPunct = true;
-
     $(".word").empty().css("margin-left", shift + "px").html(word);
+
   }
+
+  function printConsole(word, i, j, shift, end) {
+    end = typeof end !== 'undefined' ? end : ' ';
+    console.log(
+        "word: " + word + 
+        " letter: " + word[j] + 
+        " j/i: " + j+"/"+i + 
+        " charCode: " + word.charCodeAt(j) + 
+        " hasPunct: " + hasPunct + 
+        " nextWord: " + nextWord +
+        " shift: " + shift + end 
+    );
+  }
+
+
 });
