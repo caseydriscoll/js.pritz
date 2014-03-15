@@ -45,8 +45,12 @@ $(document).ready(function() {
                     25, 29];        // y, z
 
   $("#load").click(function() {
+    $("#sources").toggle();
+  });
+  $(".source").click(function() {
+    $("#sources").toggle();
     $.ajax({
-      url : "docs/tale-of-two-cities.txt",
+      url : $(this).attr('href'),
       dataType: "text",
       success : function (data) {
         processWords(data);
