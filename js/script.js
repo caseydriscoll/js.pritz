@@ -180,6 +180,9 @@ $(document).ready(function() {
     var word = words[wordStringsArray[w]]; // A wordObject
     $(".word").empty().css("margin-left", word.shift + "px").html(word.html);
     w++;
+    
+    var percent = w / wordStringsArray.length * 100;
+    $('.progress-bar.reading').css('width', percent + '%');
   }
 
   function printConsole(word, i, j, shift, end) {
