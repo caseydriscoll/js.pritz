@@ -35,7 +35,12 @@
         <form class="navbar-form navbar-left">
           <div class="form-group">
             <label for="rate" class="">WPM</label>
-            <input type="number" value="600" name="rate" id="rate" class="wpm form-control" />
+            <input type="number" value="600" name="rate" id="rate" class="wpm form-control" min="0"/>
+
+            <div class="btn-group">
+              <a id="slower" class="btn btn-default"><span class="glyphicon glyphicon-minus"></span></a>
+              <a id="faster" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></a>
+            </div>
 
             <div class="btn-group">
               <a id="prevword" class="btn btn-default"><span class="glyphicon glyphicon-step-backward"></span></a>

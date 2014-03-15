@@ -28,11 +28,11 @@ $(document).ready(function() {
                     30, 30, 30, 30, // :  ;  <  = 
                     30, 30, 30,     // >  ?  @ 
                     30, 35, 30, 36, // A, B, C, D
-                    30, 30, 30, 30, // E, F, G, H
+                    30, 30, 30, 35, // E, F, G, H
                     16, 30, 30, 30, // I, J, K, L
                     30, 30, 30, 34, // M, N, O, P
                     30, 30, 34, 30, // Q, R, S, T
-                    30, 30, 30, 30, // U, V, W, X
+                    30, 30, 50, 30, // U, V, W, X
                     30, 30,         // Y, Z, 
                     30, 30, 30, 30, // [  \  ]  ^
                     30, 30,         // _  ` 
@@ -147,6 +147,19 @@ $(document).ready(function() {
   var intervalID;
   var wpm = $('#rate').val();
   var speed = 60000 / wpm; 
+  $("#faster").click(function() {
+    $('#rate').val( parseInt( $('#rate').val() ) + 100 );
+    wpm = $('#rate').val();
+    speed = 60000 / ( wpm * 1.2 ); // Bug, doesn't seem to moving as fast
+  });
+  $("#slower").click(function() {
+    $('#rate').val( parseInt( $('#rate').val() ) - 100 );
+    if ( $('#rate').val() < 0 )
+      $('#rate').val( 0 );
+
+    wpm = $('#rate').val();
+    speed = 60000 / ( wpm * 1.2 ); // Bug, doesn't seem to moving as fast
+  });
   $("#start").click(function() {
     $(this).hide();
     $('#stop').show();

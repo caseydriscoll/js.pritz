@@ -57,6 +57,7 @@ h1.navbar-brand {
 
 .wpm {
   width: 70px !important;
+  padding-right: 0px;
 }
 
 .progress { 
