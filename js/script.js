@@ -6,6 +6,8 @@ $(document).ready(function() {
   var wordCount;
   var wordTimer;
 
+  var direction;
+
   // ASCII Table at
   // http://www.theasciicode.com.ar/ascii-printable-characters/capital-letter-a-uppercase-ascii-code-65.html
   var charWidths = [30, 30, 30, 30, 
@@ -149,6 +151,24 @@ $(document).ready(function() {
     $(this).hide();
     $('#stop').show();
 
+    direction = 'forward';
+
+    $('.block').show().animate({width: 0}, 800);
+
+    wpm = $('#rate').val();
+    speed = 60000 / ( wpm * 1.2 ); // Bug, doesn't seem to moving as fast
+    setTimeout( function() { intervalID = setInterval(run, speed) }, 800 );
+  });
+  $("#reverse").click(function() {
+    // Doesn't react if at the beginning
+    if ( w == 1 )
+      return;
+
+    $(this).hide();
+    $('#stop').show();
+
+    direction = 'reverse';
+
     $('.block').show().animate({width: 0}, 800);
 
     wpm = $('#rate').val();
@@ -158,7 +178,12 @@ $(document).ready(function() {
 
   $("#stop").click(function() {
     $(this).hide();
-    $('#start').show();
+    if ( direction == 'forward' )
+      $('#start').show();
+    else
+      $('#reverse').show();
+  
+    // The 'blocks' are the shrinking grey divs at the start. They must be reset.
     $('.block').hide().css('width', '100%');
     clearInterval(intervalID);
   });
@@ -168,8 +193,16 @@ $(document).ready(function() {
     
     if ( words[wordStringsArray[w]].hasPunctuation )
       speed = speed * 2.5;
-   else
+    else
       speed = 60000 / wpm; 
+
+    if ( direction == 'reverse' )
+      if ( w == 1 ) {
+        $('#stop').click();
+        return;
+      } else {
+        w = w - 2;
+      }
 
     showNextWord();
 

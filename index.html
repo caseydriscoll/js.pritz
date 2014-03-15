@@ -35,13 +35,16 @@
         <form class="navbar-form navbar-left">
           <div class="form-group">
             <label for="rate" class="">WPM</label>
-            <input type="text" value="600" name="rate" id="rate" class="wpm form-control" />
-        
-            <a id="start" class="btn btn-success">start</a>
-            <a id="stop" class="btn btn-danger">stop</a>
+            <input type="number" value="600" name="rate" id="rate" class="wpm form-control" />
 
-            <a id="prevword" class="btn btn-default">prev</a>
-            <a id="nextword" class="btn btn-default">next</a>
+            <div class="btn-group">
+              <a id="prevword" class="btn btn-default"><span class="glyphicon glyphicon-step-backward"></span></a>
+              <a id="reverse" class="btn btn-default"><span class="glyphicon glyphicon-backward"></span></a>
+              <a id="stop" class="btn btn-danger"><span class="glyphicon glyphicon-stop"></span></a>
+              <a id="start" class="btn btn-success"><span class="glyphicon glyphicon-play"></span></a>
+              <a id="nextword" class="btn btn-default"><span class="glyphicon glyphicon-step-forward"></span></a>
+            </div>
+
           </div>
         </form>
 
