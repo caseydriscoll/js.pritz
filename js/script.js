@@ -3,8 +3,8 @@ $(document).ready(function() {
   var wordStringsArray; // Array of words in order
 
   var w = 0;          // Index of current word
-  var wordCount;
-  var wordTimer;
+  var wordCount = 0;
+  var timer = new Object; // A collection of all timing variables
 
   var direction;
 
@@ -43,6 +43,15 @@ $(document).ready(function() {
                     28, 18, 25, 18, // q, r, s, t
                     28, 26, 38, 29, // u, v, w, x
                     25, 29];        // y, z
+
+  $('#wpm').tooltip();
+  function updateWPM() {
+    wordCount++;
+    var lapsedTime = (Date.now() - timer.start) / 60000; // in minutes 
+    var actualWPM = Math.floor(wordCount / lapsedTime);
+
+    $('#wpmdisplay').text(wordCount + " " + actualWPM); 
+  }
 
   $("#load").click(function() {
     $("#sources").toggle();
@@ -162,13 +171,14 @@ $(document).ready(function() {
       $('#rate').val( 0 );
 
     wpm = $('#rate').val();
-    speed = 60000 / ( wpm * 1.2 ); // Bug, doesn't seem to moving as fast
+    speed = 60000 / wpm; 
   });
   $("#start").click(function() {
     $(this).hide();
     $('#stop').show();
 
     direction = 'forward';
+    timer.start = Date.now();
 
     $('.block').show().animate({width: 0}, 800);
 
@@ -233,6 +243,8 @@ $(document).ready(function() {
     
     var percent = w / wordStringsArray.length * 100;
     $('.progress-bar.reading').css('width', percent + '%');
+
+    updateWPM();
   }
 
   function printConsole(word, i, j, shift, end) {

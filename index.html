@@ -32,7 +32,7 @@
       <h1 class="navbar-brand">js.<span>p</span>ritz</h1>
       <form class="navbar-form navbar-left">
         <div class="form-group">
-          <label for="rate" class="">WPM</label>
+          <label for="rate" class="" id="wpm" >WPM</label>
           <input type="number" value="600" name="rate" id="rate" class="wpm form-control" min="0"/>
 
           <div class="btn-group">
@@ -49,7 +49,10 @@
           </div>
 
         </div>
+
       </form>
+
+      <p class="navbar-text" id="wpmdisplay">0</p>
 
       <div class="navbar-form navbar-right">
         <div class="progress hide">
